@@ -33,14 +33,11 @@ export const GlobalProvider = ({ navigation, children }) => {
   const authContext = React.useMemo(
     () => ({
       signIn: async (data) => {
-        console.log("i am signin");
         dispatch({
           type: "SIGN_IN",
           token: "dummy-auth-token",
           payload: data,
         });
-
-        console.log("dispatch finished");
       },
       signOut: () => dispatch({ type: "SIGN_OUT" }),
       signUp: async (data) => {

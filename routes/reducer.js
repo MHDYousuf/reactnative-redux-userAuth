@@ -1,5 +1,4 @@
 export default (state, action) => {
-  console.log(state);
   switch (action.type) {
     case "RESTORE_TOKEN":
       return {
@@ -9,7 +8,6 @@ export default (state, action) => {
         notfound: false,
       };
     case "SIGN_IN":
-      console.log("reducer signin");
       const found =
         state.user !== null
           ? state.user.some(
@@ -27,7 +25,6 @@ export default (state, action) => {
         };
       else return { ...state, notfound: true };
     case "SIGN_UP":
-      console.log("reducer signup");
       return {
         ...state,
         isSignout: true,
