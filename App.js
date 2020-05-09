@@ -1,12 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Navigate from "./routes/RootStack";
+import Navigator from "./routes/RootStack";
+import { GlobalProvider } from "./routes/GlobalState";
 
-export default function App() {
+export default function App({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Navigate />
-    </View>
+    <GlobalProvider>
+      <View style={styles.container}>
+        <Navigator />
+      </View>
+    </GlobalProvider>
   );
 }
 

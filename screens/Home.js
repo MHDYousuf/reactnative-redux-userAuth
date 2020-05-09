@@ -1,20 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
+import { AuthContext } from "../routes/GlobalState";
+import { globalStyles } from "../styles/global";
 
-const Home = ({ navigation }, props) => {
-  const handleSignout = () => {
-    navigation.goBack();
-  };
-
-  console.log(props);
-
+function Home() {
+  const { signOut } = useContext(AuthContext);
   return (
-    <View>
-      <Text>Home Screen</Text>
-      <Button onPress={handleSignout} title="Log out" />
+    <View style={{ ...globalStyles.container, ...globalStyles.centering }}>
+      <Text style={{ ...globalStyles.titleText }}>
+        Hello, you are Signed In
+      </Text>
+      <Button title="Sign out" onPress={signOut} />
     </View>
   );
-};
+}
 
 export default Home;
 

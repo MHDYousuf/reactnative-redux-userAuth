@@ -1,26 +1,42 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import Login from "../screens/Login";
-import Home from "../screens/Home";
+import { createStackNavigator } from "@react-navigation/stack";
+import SplashScreen from "../screens/Splash";
+import HomeScreen from "../screens/Home";
+import RegisterScreen from "../screens/Register";
+import LoginScreen from "../screens/Login";
+import { AuthContext } from "./GlobalState";
 
 const Stack = createStackNavigator();
 
 export default function RootStack() {
+  const { isLoading, isSignout, userToken } = React.useContext(AuthContext);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ title: "Overview" }}
-        />
-      </Stack.Navigator>
+      {isLoading ? (
+        <SplashScreen />
+      ) : userToken == null ? (
+        <Stack.Navigator>
+          <Stack.Screen
+            name="SignIn"
+            component={LoginScreen}
+            options={{
+              title: "Sign in",
+              animationTypeForReplace: isSignout ? "pop" : "push",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{ title: "Register" }}
+          />
+        </Stack.Navigator>
+      ) : (
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={HomeScreen} />
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   );
 }
