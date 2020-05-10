@@ -1,5 +1,5 @@
 ## React Native Simple User Authentication
-##### (Redux and Non-Redux Versions)
+##### (Redux and Context API Versions)
 ![GitHub issues](https://img.shields.io/github/issues/MHDYousuf/reactnative-redux-userAuth)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)
 ![MIT license](https://img.shields.io/github/license/MHDYousuf/reactnative-redux-userAuth)
