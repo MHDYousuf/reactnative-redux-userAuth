@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { connect } from "react-redux";
+import { AsyncStorage } from "react-native";
 import SplashScreen from "../screens/Splash";
 import HomeScreen from "../screens/Home";
 import RegisterScreen from "../screens/Register";
 import LoginScreen from "../screens/Login";
-import { AuthContext } from "./GlobalState";
+import { restoreToken } from "../actions";
 
 const Stack = createStackNavigator();
 
-export default function RootStack() {
-  const { isLoading, isSignout, userToken } = React.useContext(AuthContext);
+function RootStack(props) {
+  const { isLoading, isSignout, userToken, dispatch } = props;
+
+  useEffect(() => {
+    const bootstrapAsync = async () => {
+      let userToken;
+
+      try {
+        userToken = await AsyncStorage.getItem("userToken");
+      } catch (err) {
+        console.log(err);
+      }
+      dispatch(restoreToken(userToken));
+    };
+
+    bootstrapAsync();
+  }, []);
+
   return (
     <NavigationContainer>
       {isLoading ? (
@@ -40,3 +58,13 @@ export default function RootStack() {
     </NavigationContainer>
   );
 }
+
+const mapStateToProps = (state) => ({
+  isLoading: state.isLoading,
+  isSignout: state.isSignout,
+  userToken: state.userToken,
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps)(RootStack);

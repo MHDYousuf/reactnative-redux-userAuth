@@ -1,20 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import Navigator from "./routes/RootStack";
-import { GlobalProvider } from "./routes/GlobalState";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import Navigator from "./src/routes/RootStack";
+import rootReducer from "./src/reducers";
 
-export default function App({ navigation }) {
+function App() {
+  const store = createStore(rootReducer);
+
   return (
-    <GlobalProvider>
-      <View style={styles.container}>
-        <Navigator />
-      </View>
-    </GlobalProvider>
+    <Provider store={store}>
+      <Navigator />
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+export default App;

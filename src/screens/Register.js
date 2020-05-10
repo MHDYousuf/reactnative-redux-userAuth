@@ -1,19 +1,18 @@
 import React from "react";
 import { TextInput, View, Text } from "react-native";
-import { AuthContext } from "../routes/GlobalState";
+import { connect } from "react-redux";
+import { signUp } from "../actions";
 import { globalStyles } from "../styles/global.js";
 import { Formik } from "formik";
 import * as yup from "yup";
 import FlatButton from "../components/Button.js";
-import { NavigationHelpersContext } from "@react-navigation/native";
 
 const reviewSchema = yup.object({
   username: yup.string().required().min(4),
   password: yup.string().required().min(4),
 });
 
-export default function Register({ navigation }) {
-  const { signUp } = React.useContext(AuthContext);
+function Register({ navigation, dispatch }) {
   return (
     <View style={globalStyles.container}>
       <Text style={globalStyles.titleText}>Register</Text>
@@ -21,7 +20,7 @@ export default function Register({ navigation }) {
         initialValues={{ username: "", password: "" }}
         validationSchema={reviewSchema}
         onSubmit={({ username, password }, actions) => {
-          signUp({ username, password });
+          dispatch(signUp({ username, password }));
           navigation.goBack();
         }}
       >
@@ -34,7 +33,6 @@ export default function Register({ navigation }) {
               onBlur={props.handleBlur("username")}
               value={props.values.username}
             />
-            {/* only if the left value is a valid string, will the right value be displayed */}
             <Text style={globalStyles.errorText}>
               {props.touched.username && props.errors.username}
             </Text>
@@ -58,3 +56,8 @@ export default function Register({ navigation }) {
     </View>
   );
 }
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = {};
+
+export default connect()(Register);

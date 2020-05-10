@@ -1,15 +1,21 @@
-export default (state, action) => {
-  console.log(state);
+const initialState = {
+  isLoading: true,
+  isSignout: false,
+  userToken: null,
+  user: [{ username: "test", password: "test" }],
+  notfound: false,
+};
+
+export default (state = initialState, action) => {
   switch (action.type) {
     case "RESTORE_TOKEN":
       return {
         ...state,
-        userToken: action.token,
+        userToken: action.payload,
         isLoading: false,
         notfound: false,
       };
     case "SIGN_IN":
-      console.log("reducer signin");
       const found =
         state.user !== null
           ? state.user.some(
@@ -27,7 +33,6 @@ export default (state, action) => {
         };
       else return { ...state, notfound: true };
     case "SIGN_UP":
-      console.log("reducer signup");
       return {
         ...state,
         isSignout: true,

@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { AuthContext } from "../routes/GlobalState";
+import { connect } from "react-redux";
+import { signIn } from "../actions";
 import { globalStyles } from "../styles/global.js";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -18,8 +19,7 @@ const reviewSchema = yup.object({
   password: yup.string().required().min(4),
 });
 
-export default function Login({ navigation }) {
-  const { signIn, notfound } = React.useContext(AuthContext);
+function Login({ navigation, dispatch, notfound }) {
   return (
     <View style={{ ...globalStyles.container, ...globalStyles.centering }}>
       {notfound
@@ -32,7 +32,7 @@ export default function Login({ navigation }) {
         initialValues={{ username: "", password: "" }}
         validationSchema={reviewSchema}
         onSubmit={({ username, password }, actions) => {
-          signIn({ username, password });
+          dispatch(signIn({ username, password }));
         }}
       >
         {(props) => (
@@ -44,7 +44,6 @@ export default function Login({ navigation }) {
               onBlur={props.handleBlur("username")}
               value={props.values.username}
             />
-            {/* only if the left value is a valid string, will the right value be displayed */}
             <Text style={globalStyles.errorText}>
               {props.touched.username && props.errors.username}
             </Text>
@@ -80,3 +79,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
+const mapStateToProps = (state) => ({
+  notfound: state.notfound,
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps)(Login);
