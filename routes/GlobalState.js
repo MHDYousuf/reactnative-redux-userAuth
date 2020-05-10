@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AsyncStorage, Alert } from "react-native";
+import { AsyncStorage } from "react-native";
 import AppReducer from "./reducer";
 
 const initialState = {

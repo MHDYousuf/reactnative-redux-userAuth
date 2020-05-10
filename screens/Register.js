@@ -5,7 +5,6 @@ import { globalStyles } from "../styles/global.js";
 import { Formik } from "formik";
 import * as yup from "yup";
 import FlatButton from "../components/Button.js";
-import { NavigationHelpersContext } from "@react-navigation/native";
 
 const reviewSchema = yup.object({
   username: yup.string().required().min(4),
